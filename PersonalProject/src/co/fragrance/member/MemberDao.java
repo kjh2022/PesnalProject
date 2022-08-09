@@ -1,17 +1,20 @@
 package co.fragrance.member;
 
-import co.fragrance.common.DAO;
+import co.fragrance.common.DbManagement;
 
-public class MemberDAO extends DAO {
+public class MemberDao extends DbManagement {
 	// 싱글톤
-	private static MemberDAO md = new MemberDAO();
+	private static MemberDao md = null;
 
-	// 생성자
-	private MemberDAO() {
+	public static MemberDao getInstance() {
+		if (md == null) {
+			md = new MemberDao();
+		}
+		return md;
 	}
 
-	public static MemberDAO getInstance() {
-		return md;
+	// 생성자
+	private MemberDao() {
 	}
 
 //   1.로그인 메소드
@@ -94,6 +97,7 @@ public class MemberDAO extends DAO {
 		}
 		return result;
 	}
+
 //	회원가입 시 닉네임 중복 확인
 	public boolean duplicateAs(String as) {
 		boolean result = false;
@@ -120,6 +124,7 @@ public class MemberDAO extends DAO {
 		}
 		return result;
 	}
+
 //2.회원가입
 	public int memberJoin(Member member) {
 		int result = 0;

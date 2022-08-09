@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class DAO {
+public class DbManagement {
 
 //	java <-> DB연결할 때 쓰는 객체
 	protected Connection conn = null;

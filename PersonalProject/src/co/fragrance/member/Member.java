@@ -1,8 +1,10 @@
 package co.fragrance.member;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class Member {
 /*필요한 정보
  * 아이디, 비밀번호, 이메일, 닉네임, 권한, 회원가입일*/
