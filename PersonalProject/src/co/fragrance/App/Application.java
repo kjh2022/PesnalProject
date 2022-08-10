@@ -28,6 +28,8 @@ public class Application {
 			} else if (menuNo == 3) {
 				System.out.println("프로그램을 종료합니다.");
 				break;
+			} else {
+				System.out.println("잘못 입력했습니다. 다시 선택해 주세요.");
 			}
 		}
 		sc.close();

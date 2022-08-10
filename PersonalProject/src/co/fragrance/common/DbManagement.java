@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class DbManagement {
 
-//	java <-> DB연결할 때 쓰는 객체
+//	java <-> DB연결할 때 쓰는 객체ㄴ
 	protected Connection conn = null;
 //	Select(조회)결과 값 반환 받는 객체
 	protected ResultSet rs = null;
