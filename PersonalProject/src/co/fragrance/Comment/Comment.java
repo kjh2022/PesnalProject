@@ -1,4 +1,4 @@
-package co.fragrance.Comment;
+package co.fragrance.comment;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,16 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Comment {
-	/*
-	 * 필요한 정보 아이디, 비밀번호, 이메일, 닉네임, 권한, 회원가입일
-	 */
-	private int boardNum;
-	private int boardView;
+	private int commentNum;
 	private String memberId;
-	private String boardTitle;
-	private String boardComent;
-	private String boardDiv;
-	private String boardTime;
-	private String boardUpdate;
-
+	private int boardNum;
+	private String commentCmt;
+	private String commentTime;
+	private String commentUpdate;
 }
