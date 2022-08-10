@@ -3,8 +3,8 @@ package co.fragrance.App;
 import java.util.Scanner;
 
 import co.fragrance.Board.BoardService;
-import co.fragrance.comment.CommentService;
-//import co.fragrance.Board.BoardService;
+
+import co.fragrance.Board.BoardService;
 import co.fragrance.member.MemberService;
 
 public class ManageMent {
@@ -41,15 +41,16 @@ public class ManageMent {
 				}
 //				여기는 일반 회원들이 보는 메뉴
 			} else if (MemberService.memberInfo.getMemberAut() == 1) {
+
 				if (menuNo == 1) { // 1번 공지사항
-//					bs.getNotice(auth);
+					bs.getNotice(auth);
 				} else if (menuNo == 2) { // 2번 후기
 
 				} else if (menuNo == 3) { // 3자유
 
 				} else if (menuNo == 4) { // 4거래
 
-				} else if (menuNo == 5) {// 5정보 수정 
+				} else if (menuNo == 5) {// 5정보 수정
 					ms.updateMember();
 				} else if (menuNo == 6) { // 6로그아웃 ok
 					ms.logout();
