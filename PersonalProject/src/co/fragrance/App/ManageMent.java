@@ -2,6 +2,7 @@ package co.fragrance.App;
 
 import java.util.Scanner;
 
+import co.fragrance.Board.BoardService;
 import co.fragrance.comment.CommentService;
 //import co.fragrance.Board.BoardService;
 import co.fragrance.member.MemberService;
@@ -10,8 +11,7 @@ public class ManageMent {
 	Scanner sc = new Scanner(System.in);
 	int menuNo = 0;
 	MemberService ms = new MemberService();
-//	BoardService bs = new BoardService();
-	CommentService cs = new CommentService();
+	BoardService bs = new BoardService();
 
 	public ManageMent() {
 		cafe24();
@@ -24,7 +24,7 @@ public class ManageMent {
 			if (auth == 0) {
 //				밑에있는 관리자 메뉴
 				if (menuNo == 1) { // 공지
-//					bs.getNotice(auth);
+					bs.getNotice(auth);
 				} else if (menuNo == 2) { // 후기
 
 				} else if (menuNo == 3) { // 자유

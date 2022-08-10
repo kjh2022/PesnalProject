@@ -16,11 +16,11 @@ public class CommentDao extends DbManagement {
 	private CommentDao() {
 	}
 //	1.댓글 작성
-	public Comment writeComment(String cmt) {
-		Comment comment = null;
+	public CommentList writeComment(String cmt) {
+		CommentList comment = null;
 		try {
 			conn();
-			String sql = "INSERT INTO comment(comment_cmt) VALUES = '?' ";
+			String sql = "INSERT INTO comment_a(comment_cmt) VALUES = '?' ";
 			
 		}catch(Exception e) {
 			e.printStackTrace();

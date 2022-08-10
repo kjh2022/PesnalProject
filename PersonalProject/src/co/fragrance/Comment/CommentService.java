@@ -1,4 +1,4 @@
-package co.fragrance.comment;
+package co.fragrance.Comment;
 
 public class CommentService {
 

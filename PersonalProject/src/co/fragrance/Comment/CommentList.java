@@ -1,11 +1,11 @@
-package co.fragrance.comment;
+package co.fragrance.Comment;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Comment {
+public class CommentList {
 	private int commentNum;
 	private String memberId;
 	private int boardNum;
