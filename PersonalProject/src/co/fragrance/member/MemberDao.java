@@ -37,6 +37,8 @@ public class MemberDao extends DbManagement {
 				member.setMemberPw(rs.getString("member_pw"));
 				member.setMemberAs(rs.getString("member_as"));
 				member.setMemberAut(rs.getInt("member_aut"));
+			} else {
+				System.out.println("로그인에 실패했습니다. ID나 PW를 확인해 주세요");
 			}
 
 		} catch (Exception e) {

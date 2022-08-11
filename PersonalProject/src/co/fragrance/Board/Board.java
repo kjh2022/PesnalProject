@@ -1,5 +1,8 @@
 package co.fragrance.Board;
 
+import java.util.List;
+
+import co.fragrance.Comment.CommentList;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,8 +17,10 @@ public class Board {
 	private String memberId;
 	private String boardTitle;
 	private String boardComent;
-	private String boardDiv;
+	private int boardDiv;
 	private String boardTime;
 	private String boardUpdate;
+	private int commentCnt;
+	private List<CommentList> cmts;
 
 }

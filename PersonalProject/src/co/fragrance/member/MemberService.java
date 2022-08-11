@@ -24,10 +24,10 @@ public class MemberService {
 		}
 	}
 
+	//
 //	2.회원가입 // 아이디, 비밀번호, 이메일, 닉네임, 권한, 일반회원은 1
 	public void memberJoin() {
 		Member member = new Member();
-
 //		id 생성 시 중복체크
 		while (true) {
 			System.out.println("가입할 아이디 입력(20글자까지 입력가능)> ");
@@ -40,12 +40,9 @@ public class MemberService {
 			member.setMemberId(id);
 			break;
 		}
-
 		System.out.println("로그인에 사용할 비밀번호 입력(20글자까지 입력가능)> ");
 		String pw = sc.nextLine();
-
 		member.setMemberPw(pw);
-
 //		이메일 생성 시 중복체크
 		while (true) {
 			System.out.println("이메일 입력> ");
@@ -58,7 +55,6 @@ public class MemberService {
 			member.setEmail(em);
 			break;
 		}
-
 //		닉네임 중복체크
 		while (true) {
 			System.out.println("활동시 사용할 닉네임 입력(10글자까지 입력가능)> ");
@@ -83,6 +79,7 @@ public class MemberService {
 		}
 	}
 
+	//
 //	5.회원 조회
 //	5-1전체 회원 조회
 	public void getMember() {
@@ -110,12 +107,12 @@ public class MemberService {
 						", 작성한 댓글 : " + member.getCommentCnt() + ", 가입일 : " + member.getMemberDate());
 				System.out.println("==========================================");
 			}
-//			System.out.println(list.get(0).g);
 		} else {
 			System.out.println("잘못 입력하셨습니다. 다시 선택해 주세요.");
 		}
 	}
 
+	//
 //	6.로그아웃
 	public void logout() {
 		if (memberInfo != null)
@@ -123,6 +120,7 @@ public class MemberService {
 		System.out.println("로그아웃 되었습니다.");
 	}
 
+	//
 //	88.회원 추방 기능
 	public void getExpMember() {
 		System.out.println("카페에서 탈퇴 시킬 회원 아이디 입력");
@@ -137,6 +135,7 @@ public class MemberService {
 		}
 	}
 
+	//
 //	회원 메뉴
 //	5.회원 정보 수정
 	public void updateMember() {
@@ -145,12 +144,10 @@ public class MemberService {
 		System.out.println("1.닉네임 변경 | 2.이메일 변경 | 3.비밀번호 변경 | 4.돌아가기");
 		menuNo = Integer.parseInt(sc.nextLine());
 		while (true) {
-//			5-1 닉네임 변경 + 중복체크
 			if (menuNo == 1) {
-
+//			5-1 닉네임 변경 + 중복체크
 				System.out.println("아이디 확인이 필요합니다. 회원 아이디를 입력하세요>");
 				String id = sc.nextLine();
-
 				System.out.println("변경할 닉네임 입력");
 				String as = sc.nextLine();
 
@@ -164,14 +161,12 @@ public class MemberService {
 				int result = MemberDao.getInstance().updateMemberAs(member);
 				checkResult(result);
 				return;
-			}
+			} else if (menuNo == 2) {
 //			5-2이메일 변경
-			else if (menuNo == 2) {
 				System.out.println("아이디 확인이 필요합니다. 회원 아이디를 입력하세요>");
 				String id = sc.nextLine();
 				System.out.println("변경할 이메일 입력");
 				String em = sc.nextLine();
-
 				boolean dupEm = MemberDao.getInstance().duplicateEm(em);
 				if (dupEm) {
 					System.out.println("이미 사용중인 이메일입니다. 다시 시도해 주세요.");
@@ -181,10 +176,8 @@ public class MemberService {
 				member.setEmail(em);
 				int restul = MemberDao.getInstance().updateMemberEm(member);
 				checkResult(restul);
-
-			} 
+			} else if (menuNo == 3) {
 //			5-3비밀번호 변경
-			else if (menuNo == 3) {
 				System.out.println("아이디 확인이 필요합니다. 회원 아이디를 입력하세요>");
 				String id = sc.nextLine();
 				System.out.println("변경할 비밀번호 입력");
@@ -194,14 +187,12 @@ public class MemberService {
 				if (pw.equals(pwr)) {
 					member.setMemberId(id);
 					member.setMemberPw(pwr);
-
 					int result = MemberDao.getInstance().updateMemberPw(member);
 					checkResult(result);
 				} else {
 					System.out.println("비밀번호가 일치하지 않습니다. 다시 입력해 주세요.");
 					continue;
 				}
-
 			} else if (menuNo == 4) {
 				System.out.println("메인메뉴로 돌아갑니다.");
 				break;
@@ -212,15 +203,15 @@ public class MemberService {
 		}
 	}
 
+	//
 //	99.회원 탈퇴
 	public void deleteMember() {
-		System.out.println("삭제 전 회원 아이디와 비밀번호를 확인해야 합니다.");
+		System.out.println("회원 아이디와 비밀번호를 확인해야 합니다.");
 		System.out.println("삭제할 회원 아이디를 입력해 주세요.");
 		String id = sc.nextLine();
 		System.out.println("비밀번호를 입력해 주세요.");
 		String pw = sc.nextLine();
 		int result = MemberDao.getInstance().delMember(id, pw);
-
 		if (result == 1) {
 			System.out.println("회원 탈퇴 완료");
 		} else {
@@ -228,6 +219,8 @@ public class MemberService {
 		}
 	}
 
+	//
+//	결과 체크 메소드
 	public void checkResult(int value) {
 		if (value == 1) {
 			System.out.println("변경 완료");
