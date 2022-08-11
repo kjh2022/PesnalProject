@@ -144,7 +144,7 @@ public class BoardDao extends DbManagement {
 				String nickName = rs.getString(3);
 				int boardView = rs.getInt(4);
 				String boardTime = rs.getString(5);
-				String boardComent = rs.getString(6);
+//				String boardComent = rs.getString(6);
 
 				board.setBoardNum(boardNum);
 				board.setBoardTitle(boardTitle);
