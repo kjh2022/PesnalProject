@@ -21,7 +21,7 @@ public class MemberDao extends DbManagement {
 	}
 
 //   1.로그인 메소드
-	public Member loginInfo(String id) {
+	public Member loginInfo(String id, String pw) {
 		Member member = null;
 		try {
 			conn();
@@ -30,17 +30,22 @@ public class MemberDao extends DbManagement {
 			pstmt.setString(1, id);
 
 			rs = pstmt.executeQuery();
-
+			String idpw = "";
 			if (rs.next()) {
-				member = new Member();
-				member.setMemberId(rs.getString("member_id"));
-				member.setMemberPw(rs.getString("member_pw"));
-				member.setMemberAs(rs.getString("member_as"));
-				member.setMemberAut(rs.getInt("member_aut"));
-			} else {
-				System.out.println("로그인에 실패했습니다. ID나 PW를 확인해 주세요");
-			}
+				idpw = rs.getString("member_pw");
 
+				if (idpw.equals(pw)) {
+					member = new Member();
+					member.setMemberId(rs.getString("member_id"));
+					member.setMemberPw(rs.getString("member_pw"));
+					member.setMemberAs(rs.getString("member_as"));
+					member.setMemberAut(rs.getInt("member_aut"));
+				} else {
+					System.out.println("로그인에 실패했습니다. ID와 PW를 확인해 주세요");
+				}
+			} else {
+				System.out.println("로그인에 실패했습니다. ID와 PW를 확인해 주세요");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -55,7 +60,6 @@ public class MemberDao extends DbManagement {
 		try {
 			conn();
 			String sql = "SELECT count(1) age FROM member WHERE member_id = ?";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
@@ -109,7 +113,6 @@ public class MemberDao extends DbManagement {
 		try {
 			conn();
 			String sql = "SELECT count(1) age FROM member WHERE member_as = ?";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, as);
 			rs = pstmt.executeQuery();
@@ -135,18 +138,14 @@ public class MemberDao extends DbManagement {
 		int result = 0;
 		try {
 			conn(); // DB Connection
-
 			String sql = "INSERT INTO member(member_id, member_pw, email, member_as, member_aut, member_date) VALUES(?, ?, ?, ?, ?, TO_CHAR(sysdate, 'yyyy-mm-dd'))";
-
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberId());
 			pstmt.setString(2, member.getMemberPw());
 			pstmt.setString(3, member.getEmail());
 			pstmt.setString(4, member.getMemberAs());
 			pstmt.setInt(5, member.getMemberAut());
-
 			result = pstmt.executeUpdate();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -159,8 +158,7 @@ public class MemberDao extends DbManagement {
 		return result;
 	}
 
-//	관리자 업무
-
+	// 관리자 업무
 //	5.회원 조회
 //	5-1전체 회원 조회 아이디, 닉네임, 이메일, 가입일자만 보이게
 	public List<Member> selectMember() {
@@ -170,9 +168,7 @@ public class MemberDao extends DbManagement {
 			conn();
 			String sql = "SELECT member_id, member_as, email, member_date FROM member ORDER BY member_id ";
 			stmt = conn.createStatement();
-
 			rs = stmt.executeQuery(sql);
-
 			while (rs.next()) {
 				member = new Member();
 				member.setMemberId(rs.getString("member_id"));
@@ -181,7 +177,6 @@ public class MemberDao extends DbManagement {
 				member.setMemberDate(rs.getString("member_date"));
 				list.add(member);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -206,9 +201,7 @@ public class MemberDao extends DbManagement {
 			for (int i = 1; i < 4; i++) {
 				pstmt.setString(i, memberId);
 			}
-
 			rs = pstmt.executeQuery();
-
 			while (rs.next()) {
 				member = new Member();
 				member.setMemberId(rs.getString("member_id"));
@@ -217,10 +210,8 @@ public class MemberDao extends DbManagement {
 				member.setBoardCnt(rs.getInt("posts"));
 				member.setCommentCnt(rs.getInt("comments"));
 				member.setMemberDate(rs.getString("member_date"));
-
 				list.add(member);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -237,7 +228,6 @@ public class MemberDao extends DbManagement {
 			String sql = "DELETE FROM member WHERE member_id = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
-
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -258,9 +248,7 @@ public class MemberDao extends DbManagement {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getMemberAs());
 			pstmt.setString(2, member.getMemberId());
-
 			result = pstmt.executeUpdate();
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -273,24 +261,12 @@ public class MemberDao extends DbManagement {
 	public int updateMemberEm(Member member) {
 		int result = 0;
 		try {
-//			String sql2 = "SELECT COUNT(1) b FROM member WHERE member_id = ?";
-//			pstmt = conn.prepareStatement(sql2);
-//			pstmt.setString(1, member.getMemberId());
-//
-//			rs = pstmt.executeQuery();
-//			if (rs != null) {
-
 			conn();
 			String sql = "UPDATE member SET email = ? WHERE member_id = ? ";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, member.getEmail());
 			pstmt.setString(2, member.getMemberId());
-
 			result = pstmt.executeUpdate();
-//			}else {
-//				System.out.println("해당하는 아이디가 없습니다. 다시 입력해 주세요");
-//			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -326,16 +302,13 @@ public class MemberDao extends DbManagement {
 			String sql2 = "SELECT member_pw FROM member where member_id = ?";
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setString(1, memberId);
-
 			rs = pstmt.executeQuery();
-
 			if (rs.next()) {
 				String a = rs.getString("member_pw");
 				if (a.equals(memberPw)) {
 					String sql = "DELETE FROM member WHERE member_id = ?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, memberId);
-
 					result = pstmt.executeUpdate();
 				}
 			}
@@ -345,7 +318,5 @@ public class MemberDao extends DbManagement {
 			disconnect();
 		}
 		return result;
-
 	}
-
 }

@@ -16,11 +16,10 @@ public class MemberService {
 		System.out.println("PW 입력>");
 		String pw = sc.nextLine();
 
-		member = MemberDao.getInstance().loginInfo(id);
-		if (member.getMemberPw().equals(pw)) {
+		member = MemberDao.getInstance().loginInfo(id, pw);
+		if (member != null) {
 			memberInfo = member;
-		} else {
-			System.out.println("로그인에 실패했습니다. ID나 PW를 확인해 주세요");
+			System.out.println("로그인 되었습니다.");
 		}
 	}
 
@@ -69,9 +68,7 @@ public class MemberService {
 		}
 //		일반회원은 1번 고정
 		member.setMemberAut(1);
-
 		int result = MemberDao.getInstance().memberJoin(member);
-
 		if (result == 1) {
 			System.out.println("고객 정보 등록 완료");
 		} else {
@@ -87,7 +84,6 @@ public class MemberService {
 		System.out.println("1.전체 회원 조회 | 2.상세 검색으로 회원 조회");
 		int menuNo = Integer.parseInt(sc.nextLine());
 		if (menuNo == 1) {
-
 			System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 			for (Member member : list) {
 				System.out.println("[회원정보] 아이디 : " + member.getMemberId() + ", 닉네임 : " + member.getMemberAs() //
@@ -125,9 +121,7 @@ public class MemberService {
 	public void getExpMember() {
 		System.out.println("카페에서 탈퇴 시킬 회원 아이디 입력");
 		String id = sc.nextLine();
-
 		int result = MemberDao.getInstance().expulsionMember(id);
-
 		if (result == 1) {
 			System.out.println("회원 추방 완료");
 		} else {
@@ -150,7 +144,6 @@ public class MemberService {
 				String id = sc.nextLine();
 				System.out.println("변경할 닉네임 입력");
 				String as = sc.nextLine();
-
 				boolean dupAs = MemberDao.getInstance().duplicateAs(as);
 				if (dupAs) {
 					System.out.println("중복된 닉네임입니다. 다시 시도해 주세요.");

@@ -30,9 +30,7 @@ public class BoardDao extends DbManagement {
 					+ " TO_CHAR(B.board_time, 'yyyy-MM-dd HH24:mm:ss') as board_time, b.board_num" //
 					+ " FROM BOARD B LEFT JOIN MEMBER M ON B.member_id = M.member_id" //
 					+ " WHERE b.board_div = 0";
-
 			pstmt = conn.prepareStatement(sql);
-
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				board = new Board();
@@ -56,6 +54,7 @@ public class BoardDao extends DbManagement {
 		return board;
 	}
 
+	//
 //	운영자만, 공지사항 수정 가능
 	public void updateNotice(Board board) {
 		try {
@@ -72,7 +71,25 @@ public class BoardDao extends DbManagement {
 			disconnect();
 		}
 	}
-//	운영자 전체 게시글 조회
+
+//	게시글 삭제
+	public int deleteBoard(int boardNum) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "DELETE FROM board where board_num = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNum);
+
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return result;
+	}
 
 	//
 //	번호 입력 시 각 게시판에 작성된 전체 글 목록 보이게
@@ -85,7 +102,7 @@ public class BoardDao extends DbManagement {
 					+ "	(SELECT COUNT(1) FROM comment_list WHERE board_num = b.board_num) AS comment_cnt, m.member_as, b.board_time" //
 					+ " FROM board b, member m" //
 					+ " WHERE b.member_id = m.member_id " //
-					+ " AND b.board_div = ?"; //
+					+ " AND b.board_div = ?" + "	ORDER BY board_num DESC "; //
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, div);
 			rs = pstmt.executeQuery();
@@ -104,7 +121,7 @@ public class BoardDao extends DbManagement {
 				board.setCommentCnt(comentCnt);
 				board.setMemberId(nickName);
 				board.setBoardTime(boardTime);
-				
+
 				list.add(board);
 			}
 		} catch (Exception e) {
@@ -120,20 +137,20 @@ public class BoardDao extends DbManagement {
 		Board board = null;
 		try {
 			conn();
-			
+
 			String sql2 = "UPDATE board SET board_view = board_view + 1 WHERE board_num = ?";
 			pstmt = conn.prepareStatement(sql2);
 			pstmt.setInt(1, boardnum);
 			pstmt.executeUpdate();
-			
+
 //			게시글 내용출력하는곳
 			String sql = "SELECT b.board_num, b.board_title," //
-					+ " m.member_as, b.board_view, b.board_time"//
+					+ " m.member_as, b.board_view, b.board_time, "//
 					+ " b.board_coment" //
 					+ " FROM member m, board b" //
 					+ " WHERE m.member_id = b.member_id" //
 					+ "	AND b.board_num = ?";
-			
+
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, boardnum);
 			rs = pstmt.executeQuery();
@@ -163,30 +180,29 @@ public class BoardDao extends DbManagement {
 	}
 
 //	2.자유게시판에 글 작성
-public int insertReview(Board board) {
-	int result = 0;
-	try {
-		conn();
-		String sql = "INSERT INTO BOARD(board_num, "
-				+ "board_view, member_id, board_title, board_coment, board_div,"
-				+ "board_time)"
-				+ " VALUES (SEQ_BOARD.nextval, ?, ?, ?, ?, ?, sysdate)"; //
-		pstmt = conn.prepareStatement(sql);
-		
-		pstmt.setInt(1, 0);
-		pstmt.setString(2, board.getMemberId());
-		pstmt.setString(3, board.getBoardTitle());
-		pstmt.setString(4, board.getBoardComent());
-		pstmt.setInt(5, 2);
+	public int insertReview(Board board) {
+		int result = 0;
+		try {
+			conn();
+			String sql = "INSERT INTO BOARD(board_num, "
+					+ "board_view, member_id, board_title, board_coment, board_div," + "board_time)"
+					+ " VALUES (SEQ_BOARD.nextval, ?, ?, ?, ?, ?, sysdate)"; //
+			pstmt = conn.prepareStatement(sql);
 
-		result = pstmt.executeUpdate();
+			pstmt.setInt(1, 0);
+			pstmt.setString(2, board.getMemberId());
+			pstmt.setString(3, board.getBoardTitle());
+			pstmt.setString(4, board.getBoardComent());
+			pstmt.setInt(5, 2);
 
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		disconnect();
+			result = pstmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		return result;
 	}
-	return result;
-}
-	
+
 }
