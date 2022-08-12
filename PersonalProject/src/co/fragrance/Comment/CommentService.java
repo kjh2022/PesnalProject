@@ -1,6 +1,5 @@
 package co.fragrance.Comment;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class CommentService {
@@ -10,14 +9,7 @@ public class CommentService {
 	public void getCommentList(int boardNum) {
 		CommentList commentList = new CommentList();
 		commentList.setBoardNum(boardNum);
-//		System.out.println("ㅡㅡㅡㅡㅡ작성된 댓글ㅡㅡㅡㅡㅡ");
 		while (true) {
-//			List<CommentList> list = CommentDao.getInstance().selectCmt(boardNum);
-//			System.out.println("글 번호" + "\t" + "작성자");
-//			for (CommentList cl : list) {
-//				System.out.println(cl.getCommentNum() + "\t" + cl.getMemberId() + "\t" + cl.getCommentCmt() + "\t"
-//						+ cl.getCommentTime());
-//			}
 
 			System.out.println("1.댓글 작성 | 2.나가기");
 			int menu = Integer.parseInt(sc.nextLine());
@@ -33,7 +25,7 @@ public class CommentService {
 					builder.append(comment);
 				}
 				commentList.setCommentCmt(builder.toString());
-				CommentDao.getInstance().insertComment(commentList);
+				CommentDao.getInstance().insertComment(commentList, boardNum);
 				System.out.println("댓글 작성이 완료되었습니다.");
 
 			} else if (menu == 2) {

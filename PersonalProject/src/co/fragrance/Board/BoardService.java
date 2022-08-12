@@ -74,18 +74,10 @@ public class BoardService {
 		System.out.println("자유 게시판입니다.");
 		while (true) {
 			List<Board> list = BoardDao.getInstance().selectBoard(2);
-//			System.out.println("글번호 \t조회수 \t 제목 \t       댓글\t작성자    작성일자");
 			for (Board bd : list) {
 				System.out.printf("글 번호 : %-2d 조회수 : %-2d 제목 : %-20s 댓글 : [%d] 작성자 : %-8s 작성일자 : %s \n", //
 						bd.getBoardNum(), bd.getBoardView(), bd.getBoardTitle(), bd.getCommentCnt(), bd.getMemberId(),
 						bd.getBoardTime());
-
-//				System.out.print("글 번호 : " + bd.getBoardNum() //
-//						+ "\t" + "조회수 : " + bd.getBoardView() //
-//						+ "\t" + "제목 : " + bd.getBoardTitle() //
-//						+ "\t" + "댓글 [" + bd.getCommentCnt() + "]" //
-//						+ "\t" + "작성자 : " + bd.getMemberId() //
-//						+ "\t" + "작성일자 : " + bd.getBoardTime() + "\n");
 			}
 			if (auth == 0) {
 				System.out.println("1.게시글 삭제 | 2.나가기");
@@ -116,7 +108,7 @@ public class BoardService {
 					if (bd != null) {
 
 						System.out.println("제목 : " + bd.getBoardTitle() + "   글번호 : " + bd.getBoardNum());
-						System.out.println("작성자 : " + bd.getMemberId() + ", 조회수 : " + bd.getCommentCnt());
+						System.out.println("작성자 : " + bd.getMemberId() + ", 조회수 : " + bd.getBoardView());
 						System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ내용ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
 						System.out.println(bd.getBoardComent());
 						System.out.println("작성일 : " + bd.getBoardTime());
@@ -124,9 +116,9 @@ public class BoardService {
 //					댓글 리스트 뽑기
 						List<CommentList> list2 = CommentDao.getInstance().selectCmt(boardnum);
 						System.out.println("ㅡㅡㅡㅡㅡ작성된 댓글ㅡㅡㅡㅡㅡ");
-						System.out.println("글 번호" + "\t" + "작성자");
+						System.out.println("글 번호" + "\t" + "작성자\n");
 						for (CommentList cmtlist : list2) {
-							System.out.println(cmtlist.getBoardNum() + "\t" + cmtlist.getMemberId() + "\t"
+							System.out.println(cmtlist.getCommentNum() + "\t" + cmtlist.getMemberId() + "\t"
 									+ cmtlist.getCommentCmt() + "\t" + cmtlist.getCommentTime());
 						}
 

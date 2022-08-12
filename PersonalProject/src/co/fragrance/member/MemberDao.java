@@ -193,7 +193,7 @@ public class MemberDao extends DbManagement {
 			conn();
 			String sql = "SELECT member_id, member_as, email," //
 					+ "  (Select count(*) from board where member_id = ? ) as posts," //
-					+ "  (Select count(*) from comment_a where member_id = ? ) as comments,"//
+					+ "  (Select count(*) from comment_list where member_id = ? ) as comments,"//
 					+ "   member_date" //
 					+ "   FROM member" //
 					+ "   WHERE member_id = ? ";//

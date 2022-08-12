@@ -6,6 +6,7 @@ import java.util.List;
 import co.fragrance.common.DbManagement;
 
 public class CommentDao extends DbManagement {
+	
 //	싱글톤
 	public static CommentDao cd = null;
 
@@ -56,17 +57,15 @@ public class CommentDao extends DbManagement {
 	}
 
 //	1.댓글 작성
-	public int insertComment(CommentList commentList) {
+	public int insertComment(CommentList commentList, int boardNum) {
 		int result = 0;
 		try {
 			conn();
 			String sql = "INSERT INTO comment_list(comment_num, member_id, comment_cmt, comment_time)"
-					+ " VALUES(SEQ_REPLY.nextval, ?, ?, sysdate)";
+					+ " VALUES( SEQ_REPLY.nextval, ?, ?, sysdate)";
 			pstmt = conn.prepareStatement(sql);
-
 			pstmt.setString(1, commentList.getMemberId());
 			pstmt.setString(2, commentList.getCommentCmt());
-//			pstmt.setString(3, commentList.getCommentTime());
 
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
